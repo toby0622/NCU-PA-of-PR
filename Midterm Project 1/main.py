@@ -20,7 +20,7 @@ x_test = x_full.tail(75).values
 y_test = y_full.tail(75).values.reshape(-1, 1)
 
 
-# sigmoid function
+# sigmoid function (0 - 1 mapping)
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
@@ -45,8 +45,10 @@ input_layer_size = 4  # input nodes
 hidden_layer_size = 4  # hidden nodes
 output_layer_size = 1  # output nodes
 
-# He method initialization (weight initialization based on previous layer size)
+# specify random seed (for result reproduction)
 np.random.seed(112522083)
+
+# 'He' method initialization (weight initialization based on previous layer size)
 weights_input_hidden = np.random.randn(input_layer_size, hidden_layer_size) * np.sqrt(2. / input_layer_size)
 bias_hidden = np.zeros((1, hidden_layer_size))
 weights_hidden_output = np.random.randn(hidden_layer_size, output_layer_size) * np.sqrt(2. / hidden_layer_size)
@@ -55,7 +57,7 @@ bias_output = np.zeros((1, output_layer_size))
 # learning rate
 learning_rate = 0.01
 # epochs (training rounds)
-epochs = 2000
+epochs = 1200
 # rmse for each epoch
 rmse_history = []
 
@@ -71,7 +73,7 @@ for epoch in range(epochs):
     rmse = np.sqrt(np.mean(np.square(error)))
     rmse_history.append(rmse)
 
-    # bakc propagation
+    # back propagation
     d_predicted_output = error * linear_transfer_derivative(final_output)
     error_hidden_layer = d_predicted_output.dot(weights_hidden_output.T)
     d_hidden_layer = error_hidden_layer * sigmoid_derivative(hidden_layer_output)
