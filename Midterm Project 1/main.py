@@ -7,7 +7,7 @@ import csv
 input_data_file = "iris_in.csv"
 target_data_file = "iris_out.csv"
 
-# pandas read file
+# pandas read csv file
 x_full = pd.read_csv(input_data_file)
 y_full = pd.read_csv(target_data_file)
 
@@ -19,58 +19,64 @@ y_train = y_full.head(75).values.reshape(-1, 1)
 x_test = x_full.tail(75).values
 y_test = y_full.tail(75).values.reshape(-1, 1)
 
-# 定义 sigmoid 函数及其导数
+
+# sigmoid function
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
 
+# sigmoid derivative
 def sigmoid_derivative(x):
     return x * (1 - x)
 
 
-# 定义线性传递函数及其导数
+# linear transfer function (purelin simulation)
 def linear_transfer(x):
     return x
 
 
+# linear transfer derivative
 def linear_transfer_derivative(x):
     return 1
 
 
-# 确保这里是按照您的数据和网络结构来设置的
-input_layer_size = 4  # 输入层神经元数量（特征数量）
-hidden_layer_size = 4  # 隐藏层神经元数量，举例
-output_layer_size = 1  # 输出层神经元数量
+# neural network settings
+input_layer_size = 4  # input nodes
+hidden_layer_size = 4  # hidden nodes
+output_layer_size = 1  # output nodes
 
-# 使用 He 初始化方法初始化权重
+# He method initialization (weight initialization based on previous layer size)
 np.random.seed(112522083)
 weights_input_hidden = np.random.randn(input_layer_size, hidden_layer_size) * np.sqrt(2. / input_layer_size)
 bias_hidden = np.zeros((1, hidden_layer_size))
 weights_hidden_output = np.random.randn(hidden_layer_size, output_layer_size) * np.sqrt(2. / hidden_layer_size)
 bias_output = np.zeros((1, output_layer_size))
 
-learning_rate = 0.01  # 学习率
-epochs = 2000  # 迭代次数
-rmse_history = []  # 用于记录每个epoch的rmse
+# learning rate
+learning_rate = 0.01
+# epochs (training rounds)
+epochs = 2000
+# rmse for each epoch
+rmse_history = []
 
 for epoch in range(epochs):
-    # 前向传播
+    # forward propagation
     hidden_layer_input = np.dot(x_train, weights_input_hidden) + bias_hidden
     hidden_layer_output = sigmoid(hidden_layer_input)
     final_output_input = np.dot(hidden_layer_output, weights_hidden_output) + bias_output
     final_output = linear_transfer(final_output_input)
 
-    # 计算 RMSE
+    # rmse calculation
     error = y_train - final_output
     rmse = np.sqrt(np.mean(np.square(error)))
     rmse_history.append(rmse)
 
-    # 反向传播
+    # bakc propagation
     d_predicted_output = error * linear_transfer_derivative(final_output)
     error_hidden_layer = d_predicted_output.dot(weights_hidden_output.T)
     d_hidden_layer = error_hidden_layer * sigmoid_derivative(hidden_layer_output)
 
-    # 更新权重和偏置
+    # weight and bias update
     weights_hidden_output += hidden_layer_output.T.dot(d_predicted_output) * learning_rate
     bias_output += np.sum(d_predicted_output, axis=0, keepdims=True) * learning_rate
     weights_input_hidden += x_train.T.dot(d_hidden_layer) * learning_rate
@@ -81,7 +87,7 @@ for epoch in range(epochs):
     elif epoch + 1 == epochs:
         print(f'epoch: {epoch + 1}, rmse: {rmse}')
 
-# 绘制 rmse 曲线
+# rmse vs epochs graph
 plt.figure(figsize=(10, 6))
 plt.plot(rmse_history, label='Training RMSE')
 plt.xlabel('Epoch')
@@ -90,12 +96,13 @@ plt.title('RMSE vs Epoch')
 plt.legend()
 plt.show()
 
-# 使用训练好的模型对测试集进行预测
+# testing data predictions
 hidden_layer_input_test = np.dot(x_test, weights_input_hidden) + bias_hidden
 hidden_layer_output_test = sigmoid(hidden_layer_input_test)
 output_layer_input_test = np.dot(hidden_layer_output_test, weights_hidden_output) + bias_output
 output_layer_output_test = linear_transfer(output_layer_input_test)
 
+# prediction result export
 with open('predict.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(output_layer_output_test.transpose())
@@ -103,6 +110,7 @@ with open('predict.csv', 'w', newline='') as csvfile:
 result = []
 counter = 0
 
+# classification method for 'output layer output test'
 for element in output_layer_output_test:
     if 0.5 <= element < 1.5:
         result.append(1)
@@ -117,5 +125,6 @@ for i in range(len(y_test)):
     if result[i] == y_test[i]:
         counter += 1
 
+# accuracy calculation
 accuracy = round((counter / len(y_test)) * 100)
 print('Test Accuracy: ' + str(accuracy) + '%')
