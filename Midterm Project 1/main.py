@@ -57,7 +57,7 @@ bias_output = np.zeros((1, output_layer_size))
 # learning rate
 learning_rate = 0.01
 # epochs (training rounds)
-epochs = 1200
+epochs = 1600
 # rmse for each epoch
 rmse_history = []
 

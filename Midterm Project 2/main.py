@@ -52,7 +52,7 @@ bias_output = np.zeros((1, output_layer_size))
 # learning rate
 learning_rate = 0.01
 # epochs (training rounds)
-epochs = 1200
+epochs = 1600
 # rmse for each epoch
 rmse_history = []
 
@@ -92,7 +92,8 @@ final_output_test = np.dot(hidden_layer_output_test, weights_hidden_output) + bi
 true_labels = np.argmax(y_test, axis=1)
 predicted_labels = np.argmax(final_output_test, axis=1)
 accuracy = np.mean(predicted_labels == true_labels)
-print(f'Test Accuracy: {accuracy * 100}%')
+accuracy_percentage = round(accuracy * 100)
+print(f'Test Accuracy: {accuracy_percentage}%')
 
 # prediction result export
 with open('predict.csv', 'w', newline='') as csvfile:
