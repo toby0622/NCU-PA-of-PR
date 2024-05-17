@@ -1,11 +1,12 @@
 import os
+
+import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
 from sklearn.decomposition import PCA
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix
-import matplotlib.pyplot as plt
+from sklearn.neural_network import MLPClassifier
+from sklearn.preprocessing import MinMaxScaler
 
 # 設定資料路徑
 data_path = 'Data/ORL3232'
