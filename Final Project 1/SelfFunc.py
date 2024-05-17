@@ -132,7 +132,7 @@ mlp.fit(train_data_normalized, train_labels)
 # 模型評估
 predictions = mlp.predict(test_data_normalized)
 accuracy = accuracy_score(test_labels, predictions)
-print("Accuracy:", accuracy)
+print(f"accuracy: {accuracy:.2%}")
 
 with open('results.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)

@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 from skimage import io
 from sklearn.metrics import accuracy_score, confusion_matrix
-from sklearn.neighbors import KNeighborsClassifier
 
 # 設定資料集路徑
 dataset_path = "Data/ORL3232"
@@ -127,6 +126,28 @@ class LDA:
         return self.transform(X)
 
 
+class KNN:
+    def __init__(self, n_neighbors=1):
+        self.n_neighbors = n_neighbors
+        self.X_train = None
+        self.y_train = None
+
+    def fit(self, X_train, y_train):
+        self.X_train = X_train
+        self.y_train = y_train
+
+    def predict(self, X_test):
+        y_pred = []
+        for sample in X_test:
+            distances = np.sqrt(np.sum((self.X_train - sample) ** 2, axis=1))
+            nearest_neighbors_indices = np.argsort(distances)[:self.n_neighbors]
+            nearest_neighbors_labels = self.y_train[nearest_neighbors_indices]
+            unique_labels, counts = np.unique(nearest_neighbors_labels, return_counts=True)
+            predicted_label = unique_labels[np.argmax(counts)]
+            y_pred.append(predicted_label)
+        return np.array(y_pred)
+
+
 # PCA降維
 pca = PCA(n_components=0.95)
 X_train_pca = pca.fit_transform(X_train)
@@ -138,7 +159,7 @@ X_train_lda = lda.fit_transform(X_train_pca, y_train)
 X_test_lda = lda.transform(X_test_pca)
 
 # 最近鄰居分類器
-knn = KNeighborsClassifier(n_neighbors=1)
+knn = KNN(n_neighbors=1)
 knn.fit(X_train_lda, y_train)
 y_pred = knn.predict(X_test_lda)
 
