@@ -1,9 +1,9 @@
 Image,True Label,Predicted Label
 image_1,0,0
-image_2,0,20
-image_3,0,39
+image_2,0,39
+image_3,0,20
 image_4,0,0
-image_5,0,39
+image_5,0,11
 image_6,1,1
 image_7,1,1
 image_8,1,1
@@ -23,7 +23,7 @@ image_21,4,4
 image_22,4,4
 image_23,4,4
 image_24,4,4
-image_25,4,39
+image_25,4,4
 image_26,5,5
 image_27,5,5
 image_28,5,5
@@ -43,12 +43,12 @@ image_41,8,8
 image_42,8,8
 image_43,8,8
 image_44,8,8
-image_45,8,8
+image_45,8,39
 image_46,9,9
 image_47,9,9
 image_48,9,9
 image_49,9,9
-image_50,9,9
+image_50,9,22
 image_51,10,10
 image_52,10,10
 image_53,10,10
@@ -56,7 +56,7 @@ image_54,10,10
 image_55,10,10
 image_56,11,11
 image_57,11,11
-image_58,11,11
+image_58,11,20
 image_59,11,11
 image_60,11,11
 image_61,12,12
@@ -77,7 +77,7 @@ image_75,14,14
 image_76,15,15
 image_77,15,15
 image_78,15,15
-image_79,15,15
+image_79,15,23
 image_80,15,15
 image_81,16,16
 image_82,16,16
@@ -95,8 +95,8 @@ image_93,18,18
 image_94,18,18
 image_95,18,18
 image_96,19,19
-image_97,19,20
-image_98,19,20
+image_97,19,39
+image_98,19,17
 image_99,19,19
 image_100,19,19
 image_101,20,20
@@ -196,6 +196,6 @@ image_194,38,38
 image_195,38,38
 image_196,39,39
 image_197,39,4
-image_198,39,39
+image_198,39,20
 image_199,39,39
-image_200,39,4
+image_200,39,39
