@@ -111,7 +111,6 @@ class MinMaxScaler:
         return self.transform(X)
 
 
-# 計算PCA，保留95%的資訊
 pca = PCA(n_components=0.95)
 train_data_pca = pca.fit_transform(train_data)
 test_data_pca = pca.transform(test_data)
