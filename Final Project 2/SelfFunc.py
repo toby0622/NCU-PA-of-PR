@@ -148,17 +148,14 @@ class KNN:
         return np.array(y_pred)
 
 
-# PCA降維
 pca = PCA(n_components=0.95)
 X_train_pca = pca.fit_transform(X_train)
 X_test_pca = pca.transform(X_test)
 
-# LDA降維
 lda = LDA()
 X_train_lda = lda.fit_transform(X_train_pca, y_train)
 X_test_lda = lda.transform(X_test_pca)
 
-# 最近鄰居分類器
 knn = KNN(n_neighbors=1)
 knn.fit(X_train_lda, y_train)
 y_pred = knn.predict(X_test_lda)
