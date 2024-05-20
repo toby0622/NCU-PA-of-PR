@@ -40,7 +40,6 @@ X_test = np.array(X_test)
 y_test = np.array(y_test)
 
 
-# 手動實現PCA
 class PCA:
     def __init__(self, n_components=None):
         self.n_components = n_components
@@ -82,7 +81,6 @@ class PCA:
         return self.transform(X)
 
 
-# 手動實現LDA
 class LDA:
     def __init__(self):
         self.means = None

@@ -47,7 +47,6 @@ test_data = np.array(test_data)
 test_labels = np.array(test_labels)
 
 
-# 手動實現PCA
 class PCA:
     def __init__(self, n_components=None):
         self.n_components = n_components
@@ -89,7 +88,6 @@ class PCA:
         return self.transform(X)
 
 
-# 手動實現 MinMaxScaler
 class MinMaxScaler:
     def __init__(self):
         self.min = None
@@ -125,8 +123,11 @@ mlp = MLPClassifier(hidden_layer_sizes=(100,), activation='relu', solver='adam',
                     alpha=0.0001, batch_size=32, learning_rate_init=0.001,
                     max_iter=200, shuffle=True, random_state=42)
 
-# 訓練模型
-mlp.fit(train_data_normalized, train_labels)
+# 訓練模型並紀錄每個epoch的損失
+loss_values = []
+for epoch in range(200):
+    mlp.partial_fit(train_data_normalized, train_labels, classes=np.unique(train_labels))
+    loss_values.append(mlp.loss_)
 
 # 模型評估
 predictions = mlp.predict(test_data_normalized)
@@ -149,4 +150,13 @@ plt.xticks(tick_marks, set(test_labels), rotation=45)
 plt.yticks(tick_marks, set(test_labels))
 plt.xlabel("Predicted Labels")
 plt.ylabel("True Labels")
+plt.show()
+
+# 繪製 epoch vs loss 圖
+plt.figure()
+plt.plot(loss_values, label='Training Loss')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.title('Epoch vs Loss')
+plt.legend()
 plt.show()
