@@ -128,7 +128,7 @@ def softmax(x):
     return exp_x / np.sum(exp_x, axis=1, keepdims=True)
 
 
-def train_with_lbfgs(X, y, hidden_size=100, max_iter=200):
+def train_with_lbfgs(X, y, hidden_size=150, max_iter=200):
     input_size = X.shape[1]
     output_size = len(np.unique(y))
 
